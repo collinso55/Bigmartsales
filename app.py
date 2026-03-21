@@ -33,9 +33,21 @@ st.markdown("""
         background-image: linear-gradient(180deg, #1e3a8a 0%, #0f172a 100%) !important;
     }
     
-    /* Ensure sidebar text stays white */
+    /* Force sidebar text stays white and toggle visible */
     section[data-testid="stSidebar"] * {
         color: #ffffff !important;
+    }
+
+    /* Mobile Menu Toggle Visibility */
+    button[data-testid="stBaseButton-header"] svg, 
+    button[data-testid="stBaseButton-headerNoPadding"] svg {
+        fill: #1e3a8a !important;
+        color: #1e3a8a !important;
+    }
+    
+    [data-testid="stHeader"] {
+        background-color: rgba(255, 255, 255, 0.9) !important;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
 
     /* Main Content Headers */
@@ -58,7 +70,7 @@ st.markdown("""
     
     .metric-label { 
         font-size: 1rem; 
-        color: #475569 !important; /* Darker slate gray label */
+        color: #475569 !important; 
         font-weight: 700; 
         text-transform: uppercase; 
         letter-spacing: 0.1em;
@@ -79,13 +91,23 @@ st.markdown("""
     }
     .stTabs [data-baseweb="tab"] {
         background-color: #e2e8f0;
-        border-radius: 8px 8px 0 0;
+        border-radius: 8px 10px 0 0;
         padding: 10px 20px;
         color: #1e3a8a !important;
     }
     .stTabs [aria-selected="true"] {
         background-color: #ffffff !important;
         font-weight: bold;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 640px) {
+        .metric-card {
+            padding: 1rem !important;
+        }
+        .metric-value {
+            font-size: 2rem !important;
+        }
     }
     </style>
 """, unsafe_allow_html=True)
