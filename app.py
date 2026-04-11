@@ -2,112 +2,109 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import joblib
-import plotly.express as px
 import os
 
 # Page configuration
 st.set_page_config(
-    page_title="Big Mart Sales Analytics",
-    page_icon="🛒",
+    page_title="Big Mart Elite Sales Predictor",
+    page_icon="💼",
     layout="wide",
     initial_sidebar_state="expanded",
 )
 
-# Custom Corporate Styling (Blue and White)
+# Professional Redesign - Dark Olive (#616236) and Pink Lace (#efc9e3)
 st.markdown("""
     <style>
-    /* Force high contrast and specific background */
+    /* Global Styles */
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap');
+    
     .stApp { 
-        background-color: #f1f5f9 !important; /* Soft light gray/slate background */
+        background-color: #fcf8fa !important; /* Extremely light pink tint */
     }
     
-    /* Global Text Visibility */
-    .stApp p, .stApp span, .stApp label, .stApp li {
-        color: #0f172a !important; /* Very dark slate/navy for body text */
-        font-weight: 500;
+    /* Typography Overrides */
+    html, body, [class*="st-"] {
+        font-family: 'Inter', sans-serif;
+        color: #2d2d2a !important;
     }
 
-    /* Sidebar Styling - Constant Dark Blue */
+    /* Sidebar Styling - Dark Olive (#616236) */
     section[data-testid="stSidebar"] {
-        background-color: #1e3a8a !important;
-        background-image: linear-gradient(180deg, #1e3a8a 0%, #0f172a 100%) !important;
+        background-color: #616236 !important;
+        border-right: 1px solid #efc9e3;
     }
     
-    /* Force sidebar text stays white and toggle visible */
+    /* Sidebar Text & Inputs */
     section[data-testid="stSidebar"] * {
-        color: #ffffff !important;
+        color: #efc9e3 !important;
+    }
+    
+    section[data-testid="stSidebar"] .stSelectbox label, 
+    section[data-testid="stSidebar"] .stSlider label {
+        font-weight: 600 !important;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 0.05em;
     }
 
-    /* Mobile Menu Toggle Visibility */
-    button[data-testid="stBaseButton-header"] svg, 
-    button[data-testid="stBaseButton-headerNoPadding"] svg {
-        fill: #1e3a8a !important;
-        color: #1e3a8a !important;
+    /* Clean Header */
+    h1 { 
+        font-family: 'Playfair Display', serif;
+        color: #616236 !important; 
+        font-size: 3rem !important;
+        font-weight: 700 !important;
+        margin-bottom: 0.5rem !important;
     }
     
-    [data-testid="stHeader"] {
-        background-color: rgba(255, 255, 255, 0.9) !important;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    }
-
-    /* Main Content Headers */
-    h1, h2, h3, h4 { 
-        color: #1e3a8a !important; 
-        font-weight: 800 !important;
-        margin-bottom: 1rem !important;
-    }
-    
-    /* Refined Metric Card */
-    .metric-card {
-        background-color: #ffffff !important;
-        border-radius: 16px;
-        box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
-        padding: 2rem;
-        border-left: 8px solid #1e3a8a;
-        margin-bottom: 25px;
-        color: #0f172a;
+    /* Result Section - Pink Lace (#efc9e3) Highlight */
+    .prediction-container {
+        background-color: #efc9e3 !important;
+        border-radius: 20px;
+        padding: 3rem;
+        text-align: center;
+        margin: 2rem 0;
+        border: 2px solid #616236;
+        box-shadow: 0 15px 35px rgba(97, 98, 54, 0.1);
     }
     
-    .metric-label { 
-        font-size: 1rem; 
-        color: #475569 !important; 
-        font-weight: 700; 
-        text-transform: uppercase; 
-        letter-spacing: 0.1em;
-        margin-bottom: 8px;
+    .prediction-title { 
+        font-size: 1.2rem;
+        color: #616236;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        font-weight: 600;
+        margin-bottom: 10px;
     }
     
-    .metric-value { 
-        font-size: 3rem; 
+    .prediction-value { 
+        font-size: 4.5rem; 
         font-weight: 900; 
-        color: #1e3a8a !important; 
-        line-height: 1.1; 
-    }
-    
-    /* Tab Styling */
-    .stTabs [data-baseweb="tab-list"] {
-        gap: 10px;
-        background-color: transparent;
-    }
-    .stTabs [data-baseweb="tab"] {
-        background-color: #e2e8f0;
-        border-radius: 8px 10px 0 0;
-        padding: 10px 20px;
-        color: #1e3a8a !important;
-    }
-    .stTabs [aria-selected="true"] {
-        background-color: #ffffff !important;
-        font-weight: bold;
+        color: #616236 !important; 
+        line-height: 1;
+        margin-top: 0;
     }
 
-    /* Responsive adjustments */
+    /* Professional Insight Cards */
+    .insight-card {
+        background-color: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        border-left: 5px solid #616236;
+        margin-bottom: 1rem;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    }
+    
+    .insight-header {
+        color: #616236;
+        font-weight: 700;
+        font-size: 1.1rem;
+        margin-bottom: 5px;
+    }
+
+    /* Mobile Adjustments */
     @media (max-width: 640px) {
-        .metric-card {
-            padding: 1rem !important;
-        }
-        .metric-value {
-            font-size: 2rem !important;
-        }
+        .prediction-value { font-size: 3rem !important; }
+        h1 { font-size: 2rem !important; }
     }
     </style>
 """, unsafe_allow_html=True)
@@ -125,40 +122,39 @@ def load_assets():
 model, preproc = load_assets()
 
 if model is None:
-    st.error("🚨 Predictive model and metadata not found. Please run the training pipeline first.")
-    st.info("Ensure `best_sales_model.pkl` and `preprocessing_info.pkl` exist in the current directory.")
+    st.error("🚨 System Assets Missing. Please run training pipeline.")
     st.stop()
 
-# Header Section
-st.title("🛒 Big Mart Sales Predictive Analytics")
-st.markdown("Forecasting product demand using high-accuracy XGBoost machine learning.")
+# Header Area
+st.title("Big Mart Elite")
+st.markdown("##### AI-DRIVEN REVENUE FORECASTING FOR REGIONAL RETAIL")
 
-# Sidebar Configuration
+# Sidebar - Elegant Input Controls
 with st.sidebar:
-    st.header("🏠 Outlet Config")
-    outlet_type = st.selectbox("Outlet Type", ["Grocery Store", "Supermarket Type1", "Supermarket Type2", "Supermarket Type3"])
-    outlet_size = st.selectbox("Outlet Size", ["Small", "Medium", "High"])
-    outlet_location = st.selectbox("Location Tier", ["Tier 1", "Tier 2", "Tier 3"])
-    outlet_years = st.slider("Outlet Operating Years", 0, 30, 15)
+    st.image("https://img.icons8.com/ios-filled/100/efc9e3/shop.png", width=80)
+    st.markdown("### OPERATIONAL PARAMETERS")
+    
+    outlet_type = st.selectbox("Outlet Classification", ["Grocery Store", "Supermarket Type1", "Supermarket Type2", "Supermarket Type3"])
+    outlet_size = st.selectbox("Floor Space (Size)", ["Small", "Medium", "High"])
+    outlet_location = st.selectbox("Territory Location", ["Tier 1", "Tier 2", "Tier 3"])
+    outlet_years = st.slider("Market Presence (Years)", 0, 30, 15)
     
     st.markdown("---")
-    st.header("🍎 Product Highlights")
-    item_mrp = st.slider("Item MRP (FCFA)", 50, 5000, 1500)
-    item_visibility_pct = st.slider("Shelf Visibility (%)", 0, 100, 15)
-    item_visibility = item_visibility_pct / 100.0
-    item_weight = st.number_input("Item Weight (g)", 4.0, 22.0, 12.0)
-    item_type_cat = st.selectbox("Category", ["Food", "Drinks", "Non-Consumable"])
-    item_fat = st.selectbox("Fat Content", ["Low Fat", "Regular", "Non-Edible"])
+    st.markdown("### PRODUCT SPECIFICATIONS")
+    item_mrp = st.slider("Product Price (FCFA)", 50, 5000, 1500)
+    item_visibility_pct = st.slider("Shelf Prominence (%)", 0, 100, 15)
+    item_weight = st.number_input("Unit Weight (g)", 4.0, 22.0, 12.0)
+    item_type_cat = st.selectbox("Inventory Category", ["Food", "Drinks", "Non-Consumable"])
+    item_fat = st.selectbox("Health Rating (Fat)", ["Low Fat", "Regular", "Non-Edible"])
 
-# Prediction Pipeline
-def prepare_input():
-    # Correct mapping as per training script
+# Pure Prediction Logic
+def get_prediction():
     size_map = {"High": 0, "Medium": 1, "Small": 2}
     loc_map = {"Tier 1": 0, "Tier 2": 1, "Tier 3": 2}
     
     data = {
         'Item_Weight': [item_weight],
-        'Item_Visibility': [item_visibility],
+        'Item_Visibility': [item_visibility_pct / 100.0],
         'Item_MRP': [item_mrp],
         'Outlet_Size_Label': [size_map[outlet_size]],
         'Outlet_Location_Type_Label': [loc_map[outlet_location]],
@@ -176,94 +172,57 @@ def prepare_input():
     }
     
     df = pd.DataFrame(data)
-    # Match the training column order
-    return df[preproc['columns']]
+    return max(0, model.predict(df[preproc['columns']])[0])
 
-# Prediction results
-input_df = prepare_input()
-prediction = model.predict(input_df)[0]
-prediction = max(0, prediction)
+# Direct Result Presentation
+prediction = get_prediction()
 
-# Build Main Dashboard
-tab1, tab2 = st.tabs(["📊 Performance Prediction", "📜 Technical Overview"])
+st.markdown(f"""
+    <div class="prediction-container">
+        <div class="prediction-title">Estimated Sales Performance</div>
+        <div class="prediction-value">{prediction:,.0f} FCFA</div>
+    </div>
+""", unsafe_allow_html=True)
 
-with tab1:
-    # Metric Display
-    st.markdown(f"""
-        <div class="metric-card">
-            <div class="metric-label">Projected Sales Volume</div>
-            <div class="metric-value">{prediction:,.0f} FCFA</div>
-        </div>
-    """, unsafe_allow_html=True)
-    
-    st.markdown("---")
-    
-    # Analysis Columns
-    col1, col2 = st.columns([1.5, 1])
-    
-    with col1:
-        st.subheader("💡 Strategic Insights")
-        if outlet_type == "Grocery Store":
-            st.warning("📊 **Observation:** Small format 'Grocery Stores' show significantly lower volume. Expanding to a Supermarket format could exponentially increase ROI.")
-        if item_mrp > 3500:
-            st.info("💎 **Observation:** Premium product detected! Pair with high-income 'Tier 3' locations for optimal conversion.")
-        if item_visibility_pct < 5:
-            st.error("👀 **Optimization:** Improving product orientation on shelf (currently < 5%) could increase predicted sales by 15-20%.")
-        else:
-            st.success("🎯 **Positive Indicator:** Healthy product visibility level. Maintain current shelf positioning strategy.")
+# Straightforward Intelligence (Text-based, no graphs)
+col1, col2 = st.columns(2)
 
-    with col2:
-        st.subheader("⚡ Factor Importance")
-        if preproc.get('feature_importance'):
-            feat_imp = pd.Series(preproc['feature_importance']).head(5).reset_index()
-            feat_imp.columns = ['Variable', 'Weight']
-            
-            # Use Corporate Blue palette
-            fig = px.bar(feat_imp, x='Weight', y='Variable', orientation='h', 
-                         title="Sales Driver Breakdown",
-                         color_discrete_sequence=['#1e3a8a'])
-            fig.update_layout(yaxis={'categoryorder':'total ascending'}, showlegend=False, margin=dict(l=0, r=0, t=30, b=0), height=300)
-            st.plotly_chart(fig, use_container_width=True)
+with col1:
+    st.markdown("### Strategic Diagnosis")
+    
+    if outlet_type == "Grocery Store":
+        st.markdown(f"""
+            <div class="insight-card">
+                <div class="insight-header">Format Restriction</div>
+                Current 'Grocery Store' format limits turnover potential by approx 60% compared to Supermarket models.
+            </div>
+        """, unsafe_allow_html=True)
+        
+    if item_visibility_pct < 10:
+        st.markdown(f"""
+            <div class="insight-card">
+                <div class="insight-header">Visibility Deficit</div>
+                Shelf prominence is below optimal baseline. Increasing visibility to 15%+ is recommended for this category.
+            </div>
+        """, unsafe_allow_html=True)
+    else:
+        st.markdown(f"""
+            <div class="insight-card">
+                <div class="insight-header">Optimized Positioning</div>
+                Product visibility is correctly aligned with high-performance retail standards.
+            </div>
+        """, unsafe_allow_html=True)
 
-    # What-If Analysis Area
-    st.markdown("---")
-    st.subheader("🧪 'What-If' Simulation")
-    st.write("Understand how MRP changes affect your bottom line:")
+with col2:
+    st.markdown("### Operational Summary")
     
-    # Simulation range (Updated for 5000 FCFA ceiling)
-    mrp_range = np.linspace(50, 5000, 50)
-    sim_results = []
-    
-    temp_df = input_df.copy()
-    for price in mrp_range:
-        temp_df['Item_MRP'] = price
-        sim_results.append(model.predict(temp_df)[0])
-    
-    sim_data = pd.DataFrame({'MRP': mrp_range, 'Predicted Sales': sim_results})
-    fig_sim = px.line(sim_data, x='MRP', y='Predicted Sales', markers=True, 
-                      labels={'MRP': 'Item Maximum Retail Price (FCFA)', 'Predicted Sales': 'Predicted Volume (FCFA)'})
-    fig_sim.update_traces(line_color='#1e3a8a', line_width=4)
-    fig_sim.add_vline(x=item_mrp, line_dash="dash", line_color="red", annotation_text="Current Setup")
-    st.plotly_chart(fig_sim, use_container_width=True)
+    summary_text = f"""
+    The analysis considers a **{item_type_cat}** product priced at **{item_mrp:,} FCFA** within a **{outlet_size}** sized establishment. 
+    Based on the **{outlet_years} years** of market presence in a **{outlet_location}** territory, the predictive engine expects 
+    the turnover volume to remain stable at the projected level.
+    """
+    st.info(summary_text)
 
-with tab2:
-    st.header("Technical Specifications")
-    st.markdown("""
-    ### ⚙️ Machine Learning Pipeline
-    The system follows a rigorous data science workflow to ensure forecast reliability.
-    
-    #### 1. Data Synthesis & Engineering
-    - **Missing Value Strategy**: Imputed `Item_Weight` via `Item_Identifier` cross-reference. Missing `Outlet_Size` handled using `Outlet_Type` mode distribution.
-    - **Temporal Features**: Calculated `Outlet_Age` (defined as 2013 - Establishment Year) to capture brand maturity effects.
-    - **Categorical Logic**: Multi-class encoding for outlets and products.
-    
-    #### 2. Advanced Regressor (XGBoost)
-    Leveraging eXtreme Gradient Boosting (XGBoost) which consistently outperforms baseline linear models by capturing non-linear interactions between variables like visibility and location type.
-    
-    #### 3. Evaluation Metrics
-    - **Root Mean Squared Error (RMSE)**: Primary optimization target during GridSearch CV.
-    - **R-Squared (Coefficient of Determination)**: Validating how well the model explains sales variance.
-    
-    ---
-    *Data Source: Big Mart Sales III Dataset (Big Mart Product Analytics).*
-    """)
+# Footer
+st.markdown("---")
+st.caption("Elite Predictive System | Powered by Advanced Regression Analytics | localized for Cameroon")
