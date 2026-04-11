@@ -64,38 +64,42 @@ st.markdown("""
         margin-bottom: -15px !important;
     }
 
-    /* Enhanced Native Toggle Button (The open/close button) */
-    button[data-testid="stBaseButton-header"],
-    button[aria-label="Open sidebar"],
-    button[aria-label="Close sidebar"] {
+    /* Enhanced Toggle Button - High Priority Overrides */
+    header[data-testid="stHeader"] button {
         background-color: #80011f !important;
         color: #fefaee !important;
-        border-radius: 8px !important;
-        width: auto !important;
-        min-width: 80px !important;
+        border-radius: 4px !important;
+        width: 100px !important;
         height: 40px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.2) !important;
-        font-size: 0 !important; /* Hide the weird internal text */
+        z-index: 999999 !important;
+        box-shadow: 0 4px 15px rgba(128, 1, 31, 0.3) !important;
     }
-    
-    button[aria-label="Open sidebar"]::after {
+
+    /* Hide ALL internal text/icons that cause the 'keyboard' text */
+    header[data-testid="stHeader"] button span,
+    header[data-testid="stHeader"] button div {
+        display: none !important;
+    }
+
+    /* Inject themed labels */
+    header[data-testid="stHeader"] button[aria-label="Open sidebar"]::after {
         content: "OPTIONS";
         font-size: 0.8rem !important;
         font-weight: 700 !important;
+        display: block !important;
         font-family: 'Inter', sans-serif !important;
     }
-    
-    button[aria-label="Close sidebar"]::after {
+
+    header[data-testid="stHeader"] button[aria-label="Close sidebar"]::after {
         content: "CLOSE";
         font-size: 0.8rem !important;
         font-weight: 700 !important;
+        display: block !important;
         font-family: 'Inter', sans-serif !important;
     }
     
-    [data-testid="stHeader"] {
+    /* Ensure the header itself is transparent to not block the button */
+    header[data-testid="stHeader"] {
         background-color: transparent !important;
     }
 
