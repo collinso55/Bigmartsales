@@ -218,17 +218,17 @@ with st.sidebar:
     st.markdown("### OPERATIONAL PARAMETERS")
     
     # Outlet Type Explanation
-    with st.expander("ℹ️ LOGIC: Outlet Classification"):
+    with st.expander("EXPLANATION: Outlet Classification"):
         st.write("Differentiates between small shops and massive hypermarkets. **IMPACT:** Supermarkets (Type 3) exponentially increase the predicted volume due to higher inventory capacity.")
     outlet_type = st.selectbox("Outlet Classification", ["Grocery Store", "Supermarket Type1", "Supermarket Type2", "Supermarket Type3"])
     
     # Location Explanation
-    with st.expander("ℹ️ LOGIC: Territory Location"):
+    with st.expander("EXPLANATION: Territory Location"):
         st.write("Urban vs. Rural demographic. **IMPACT:** Tier 1 (Urban) usually suggests higher price tolerance, while Tier 3 often requires higher volume to reach the same revenue.")
     outlet_location = st.selectbox("Territory Location", ["Tier 1", "Tier 2", "Tier 3"])
     
     # Floor Space Explanation
-    with st.expander("ℹ️ LOGIC: Floor Space"):
+    with st.expander("EXPLANATION: Floor Space"):
         st.write("Physical size of the store. **IMPACT:** Larger stores (High) allow for more consistent turnover across all product categories.")
     outlet_size = st.selectbox("Floor Space (Size)", ["Small", "Medium", "High"])
     
@@ -238,12 +238,12 @@ with st.sidebar:
     st.markdown("### PRODUCT SPECIFICATIONS")
     
     # Price Explanation
-    with st.expander("ℹ️ LOGIC: Product Price (MRP)"):
+    with st.expander("EXPLANATION: Product Price (MRP)"):
         st.write("The cost per unit. **IMPACT:** This is the strongest driver in our model. Higher prices directly scale the total revenue prediction.")
     item_mrp = st.slider("Product Price (FCFA)", 50, 5000, 1500)
     
     # Visibility Correction
-    with st.expander("ℹ️ LOGIC: Shelf Prominence"):
+    with st.expander("EXPLANATION: Shelf Prominence"):
         st.write("Physical shelf area. **IMPACT:** High prominence (15%+) generates higher 'impulse buy' probability, boosting the forecast by 10-15%.")
     item_visibility_pct = st.slider("Shelf Prominence (%)", 0, 100, 15)
     
