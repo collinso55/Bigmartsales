@@ -12,14 +12,14 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# Professional Redesign - Dark Olive (#616236) and Pink Lace (#efc9e3)
+# Professional Redesign - Deep Burgundy (#80011f) and Ivory Cream (#fefaee)
 st.markdown("""
     <style>
     /* Global Styles */
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap');
     
     .stApp { 
-        background-color: #fcf8fa !important; /* Extremely light pink tint */
+        background-color: #fefaee !important; /* Ivory Cream Background */
     }
     
     /* Typography Overrides */
@@ -28,11 +28,11 @@ st.markdown("""
         color: #2d2d2a !important;
     }
 
-    /* Sidebar Styling - Dark Olive (#616236) and Fixed-feel */
+    /* Sidebar Styling - Deep Burgundy (#80011f) and Fixed-feel */
     section[data-testid="stSidebar"] {
-        background-color: #616236 !important;
-        border-right: 1px solid #efc9e3;
-        overflow: hidden !important; /* Attempt to fix items in place */
+        background-color: #80011f !important;
+        border-right: 1px solid #fefaee;
+        overflow: hidden !important;
     }
     
     /* Hide scrollbar for sidebar while keeping functionality */
@@ -47,7 +47,7 @@ st.markdown("""
     
     /* Sidebar Text & Inputs - Condensed for 'Fixed' feel */
     section[data-testid="stSidebar"] * {
-        color: #efc9e3 !important;
+        color: #fefaee !important;
     }
     
     section[data-testid="stSidebar"] .stSelectbox, 
@@ -60,8 +60,8 @@ st.markdown("""
     button[data-testid="stBaseButton-header"],
     button[aria-label="Open sidebar"],
     button[aria-label="Close sidebar"] {
-        background-color: #616236 !important;
-        color: #efc9e3 !important;
+        background-color: #80011f !important;
+        color: #fefaee !important;
         border-radius: 50% !important;
         width: 45px !important;
         height: 45px !important;
@@ -78,26 +78,26 @@ st.markdown("""
     /* Clean Header */
     h1 { 
         font-family: 'Playfair Display', serif;
-        color: #616236 !important; 
+        color: #80011f !important; 
         font-size: 3rem !important;
         font-weight: 700 !important;
         margin-bottom: 0.5rem !important;
     }
     
-    /* Result Section - Pink Lace (#efc9e3) Highlight */
+    /* Result Section - Deep Burgundy Highlight over Ivory */
     .prediction-container {
-        background-color: #efc9e3 !important;
+        background-color: #80011f !important;
         border-radius: 20px;
         padding: 3rem;
         text-align: center;
         margin: 2rem 0;
-        border: 2px solid #616236;
-        box-shadow: 0 15px 35px rgba(97, 98, 54, 0.1);
+        border: 2px solid #80011f;
+        box-shadow: 0 15px 35px rgba(128, 1, 31, 0.1);
     }
     
     .prediction-title { 
         font-size: 1.2rem;
-        color: #616236;
+        color: #fefaee;
         text-transform: uppercase;
         letter-spacing: 0.2em;
         font-weight: 600;
@@ -107,7 +107,7 @@ st.markdown("""
     .prediction-value { 
         font-size: 4.5rem; 
         font-weight: 900; 
-        color: #616236 !important; 
+        color: #fefaee !important; 
         line-height: 1;
         margin-top: 0;
     }
@@ -117,13 +117,13 @@ st.markdown("""
         background-color: white;
         border-radius: 12px;
         padding: 1.5rem;
-        border-left: 5px solid #616236;
+        border-left: 5px solid #80011f;
         margin-bottom: 1rem;
         box-shadow: 0 4px 6px rgba(0,0,0,0.02);
     }
     
     .insight-header {
-        color: #616236;
+        color: #80011f;
         font-weight: 700;
         font-size: 1.1rem;
         margin-bottom: 5px;
