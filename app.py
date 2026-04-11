@@ -200,7 +200,19 @@ st.markdown("""
 
 # Sidebar - Elegant Input Controls
 with st.sidebar:
-    st.image("https://img.icons8.com/ios-filled/100/efc9e3/shop.png", width=80)
+    st.image("https://img.icons8.com/ios-filled/100/fefaee/shop.png", width=80)
+    
+    # New Field Explanations (Click to show/hide)
+    with st.expander("📖 FIELD DEFINITIONS"):
+        st.markdown("""
+            <div style="font-size: 0.8rem; line-height: 1.4;">
+            <b>Outlet Classification:</b> The store's business model (e.g., Grocery vs. Supermarket).<br><br>
+            <b>Territory Location:</b> Tier 1 (Urban), Tier 2 (Mid-size), Tier 3 (Local/Rural).<br><br>
+            <b>Product Price:</b> The Maximum Retail Price (MRP) in FCFA.<br><br>
+            <b>Shelf Prominence:</b> The percentage of display space allocated to this item.
+            </div>
+        """, unsafe_allow_html=True)
+
     st.markdown("### OPERATIONAL PARAMETERS")
     
     outlet_type = st.selectbox("Outlet Classification", ["Grocery Store", "Supermarket Type1", "Supermarket Type2", "Supermarket Type3"])
