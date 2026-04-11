@@ -28,23 +28,51 @@ st.markdown("""
         color: #2d2d2a !important;
     }
 
-    /* Sidebar Styling - Dark Olive (#616236) */
+    /* Sidebar Styling - Dark Olive (#616236) and Fixed-feel */
     section[data-testid="stSidebar"] {
         background-color: #616236 !important;
         border-right: 1px solid #efc9e3;
+        overflow: hidden !important; /* Attempt to fix items in place */
     }
     
-    /* Sidebar Text & Inputs */
+    /* Hide scrollbar for sidebar while keeping functionality */
+    section[data-testid="stSidebar"] > div {
+        overflow-y: auto;
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+    }
+    section[data-testid="stSidebar"] > div::-webkit-scrollbar {
+        display: none; /* Chrome, Safari and Opera */
+    }
+    
+    /* Sidebar Text & Inputs - Condensed for 'Fixed' feel */
     section[data-testid="stSidebar"] * {
         color: #efc9e3 !important;
     }
     
-    section[data-testid="stSidebar"] .stSelectbox label, 
-    section[data-testid="stSidebar"] .stSlider label {
-        font-weight: 600 !important;
-        text-transform: uppercase;
-        font-size: 0.8rem;
-        letter-spacing: 0.05em;
+    section[data-testid="stSidebar"] .stSelectbox, 
+    section[data-testid="stSidebar"] .stSlider {
+        margin-bottom: -15px !important;
+    }
+
+    /* Enhanced Native Toggle Button (The open/close button) */
+    [data-testid="stSidebarNav"] + div button,
+    button[data-testid="stBaseButton-header"],
+    button[aria-label="Open sidebar"],
+    button[aria-label="Close sidebar"] {
+        background-color: #616236 !important;
+        color: #efc9e3 !important;
+        border-radius: 50% !important;
+        width: 45px !important;
+        height: 45px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2) !important;
+    }
+    
+    [data-testid="stHeader"] {
+        background-color: transparent !important;
     }
 
     /* Clean Header */
@@ -127,7 +155,7 @@ if model is None:
 
 # Header Area
 st.title("Big Mart Elite")
-st.markdown("##### AI-DRIVEN REVENUE FORECASTING FOR REGIONAL RETAIL")
+st.markdown("##### ← USE SIDEBAR CONTROLS | AI-DRIVEN REVENUE FORECASTING")
 
 # Sidebar - Elegant Input Controls
 with st.sidebar:
