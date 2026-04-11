@@ -32,12 +32,13 @@ st.markdown("""
     section[data-testid="stSidebar"] {
         background-color: #80011f !important;
         border-right: 1px solid #fefaee;
-        overflow: hidden !important;
+        overflow-x: hidden !important; /* Strictly no horizontal scrolling */
     }
     
     /* Hide scrollbar for sidebar while keeping functionality */
     section[data-testid="stSidebar"] > div {
         overflow-y: auto;
+        overflow-x: hidden !important;
         -ms-overflow-style: none; /* IE and Edge */
         scrollbar-width: none; /* Firefox */
     }
@@ -155,7 +156,24 @@ if model is None:
 
 # Header Area
 st.title("Big Mart Elite")
-st.markdown("##### ← USE SIDEBAR CONTROLS | AI-DRIVEN REVENUE FORECASTING")
+
+# Button-styled call to action for the sidebar
+st.markdown("""
+    <div style="
+        display: inline-block;
+        background-color: #80011f;
+        color: #fefaee;
+        padding: 8px 20px;
+        border-radius: 30px;
+        font-weight: 700;
+        font-size: 0.8rem;
+        letter-spacing: 0.1em;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 10px rgba(128, 1, 31, 0.2);
+    ">
+        GENERATE INSIGHTS ↓ ADJUST PARAMETERS IN SIDEBAR
+    </div>
+""", unsafe_allow_html=True)
 
 # Sidebar - Elegant Input Controls
 with st.sidebar:
