@@ -54,14 +54,23 @@ st.markdown("""
         display: none; /* Chrome, Safari and Opera */
     }
     
-    /* Sidebar Text & Inputs - Condensed for 'Fixed' feel */
+    /* Sidebar Text & Inputs - Structured Spacing */
     section[data-testid="stSidebar"] * {
         color: #fefaee !important;
     }
     
+    /* Ensure clear separation between expanders and inputs */
     section[data-testid="stSidebar"] .stSelectbox, 
-    section[data-testid="stSidebar"] .stSlider {
-        margin-bottom: -15px !important;
+    section[data-testid="stSidebar"] .stSlider,
+    section[data-testid="stSidebar"] [data-testid="stExpander"] {
+        margin-bottom: 25px !important;
+        background-color: transparent !important;
+    }
+    
+    /* Style the expander border to be visible against Burgundy */
+    section[data-testid="stSidebar"] [data-testid="stExpander"] {
+        border: 1px solid rgba(254, 250, 238, 0.2) !important;
+        border-radius: 8px !important;
     }
 
     /* Enhanced Toggle Button - High Priority Overrides */
