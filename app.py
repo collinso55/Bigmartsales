@@ -36,78 +36,87 @@ st.markdown("""
         font-family: inherit !important;
     }
 
-    /* Sidebar Styling - Deep Burgundy (#80011f) and Fixed-feel */
+    /* Professional Redesign - Deep Burgundy (#80011f) and Ivory Cream (#fefaee) */
     section[data-testid="stSidebar"] {
         background-color: #80011f !important;
-        border-right: 1px solid #fefaee;
-        overflow-x: hidden !important; /* Strictly no horizontal scrolling */
+        border-right: 2px solid #fefaee;
     }
     
-    /* Hide scrollbar for sidebar while keeping functionality */
-    section[data-testid="stSidebar"] > div {
-        overflow-y: auto;
-        overflow-x: hidden !important;
-        -ms-overflow-style: none; /* IE and Edge */
-        scrollbar-width: none; /* Firefox */
-    }
-    section[data-testid="stSidebar"] > div::-webkit-scrollbar {
-        display: none; /* Chrome, Safari and Opera */
-    }
-    
-    /* Sidebar Text & Inputs - Structured Spacing */
     section[data-testid="stSidebar"] * {
         color: #fefaee !important;
+        font-family: 'Inter', sans-serif !important;
     }
-    
-    /* Ensure clear separation between expanders and inputs */
-    section[data-testid="stSidebar"] .stSelectbox, 
-    section[data-testid="stSidebar"] .stSlider,
-    section[data-testid="stSidebar"] [data-testid="stExpander"] {
-        margin-bottom: 25px !important;
-        background-color: transparent !important;
+
+    /* Professional Module Headers */
+    .sidebar-mod-header {
+        font-size: 0.75rem !important;
+        font-weight: 800 !important;
+        letter-spacing: 0.15em !important;
+        text-transform: uppercase !important;
+        color: #fefaee !important;
+        margin: 2rem 0 1rem 0 !important;
+        opacity: 0.8;
+        border-bottom: 1px solid rgba(254, 250, 238, 0.2);
+        padding-bottom: 5px;
     }
-    
-    /* Style the expander border to be visible against Burgundy */
+
+    /* Clean Input Styling */
+    section[data-testid="stSidebar"] div[data-baseweb="select"],
+    section[data-testid="stSidebar"] input {
+        background-color: rgba(255, 255, 255, 0.05) !important;
+        border: 1px solid rgba(254, 250, 238, 0.3) !important;
+        border-radius: 4px !important;
+    }
+
+    /* Expander Reconstruction - Professional Info Buttons */
     section[data-testid="stSidebar"] [data-testid="stExpander"] {
-        border: 1px solid rgba(254, 250, 238, 0.2) !important;
-        border-radius: 8px !important;
+        border: 1px solid rgba(254, 250, 238, 0.4) !important;
+        border-radius: 4px !important;
+        background-color: rgba(254, 250, 238, 0.05) !important;
+        margin-bottom: 5px !important;
+    }
+
+    section[data-testid="stSidebar"] [data-testid="stExpander"] summary {
+        font-size: 0.7rem !important;
+        font-weight: 700 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.05em !important;
     }
 
     /* Enhanced Toggle Button - High Priority Overrides */
     header[data-testid="stHeader"] button {
         background-color: #80011f !important;
         color: #fefaee !important;
-        border-radius: 4px !important;
-        width: 100px !important;
-        height: 40px !important;
+        border-radius: 2px !important;
+        width: 120px !important;
+        height: 38px !important;
         z-index: 999999 !important;
-        box-shadow: 0 4px 15px rgba(128, 1, 31, 0.3) !important;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15) !important;
+        border: 1px solid #fefaee !important;
     }
 
-    /* Hide ALL internal text/icons that cause the 'keyboard' text */
+    /* Hide ALL internal text/icons */
     header[data-testid="stHeader"] button span,
     header[data-testid="stHeader"] button div {
         display: none !important;
     }
 
-    /* Inject themed labels */
     header[data-testid="stHeader"] button[aria-label="Open sidebar"]::after {
-        content: "OPTIONS";
-        font-size: 0.8rem !important;
+        content: "CONFIGURATION";
+        font-size: 0.7rem !important;
         font-weight: 700 !important;
         display: block !important;
-        font-family: 'Inter', sans-serif !important;
+        letter-spacing: 0.1em;
     }
 
     header[data-testid="stHeader"] button[aria-label="Close sidebar"]::after {
-        content: "CLOSE";
-        font-size: 0.8rem !important;
+        content: "SAVE & CLOSE";
+        font-size: 0.7rem !important;
         font-weight: 700 !important;
         display: block !important;
-        font-family: 'Inter', sans-serif !important;
+        letter-spacing: 0.1em;
     }
     
-    /* Ensure the header itself is transparent to not block the button */
     header[data-testid="stHeader"] {
         background-color: transparent !important;
     }
@@ -211,40 +220,34 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-# Sidebar - Elegant Input Controls
+# Sidebar Navigation
 with st.sidebar:
-    st.image("https://img.icons8.com/ios-filled/100/fefaee/shop.png", width=80)
+    st.markdown('<div style="text-align: center; margin-bottom: 2rem;"><h2 style="color: #fefaee; font-family: Playfair Display; font-size: 1.5rem;">CONTROL PANEL</h2></div>', unsafe_allow_html=True)
     
-    st.markdown("### OPERATIONAL PARAMETERS")
+    st.markdown('<div class="sidebar-mod-header">Operational Parameters</div>', unsafe_allow_html=True)
     
-    # Outlet Type Explanation
-    with st.expander("EXPLANATION: Outlet Classification"):
-        st.write("Differentiates between small shops and massive hypermarkets. **IMPACT:** Supermarkets (Type 3) exponentially increase the predicted volume due to higher inventory capacity.")
+    with st.expander("INFO: Outlet Classification"):
+        st.write("Classification based on inventory and regional capacity. **Impact:** Direct scale factor for high-volume supermarkets.")
     outlet_type = st.selectbox("Outlet Classification", ["Grocery Store", "Supermarket Type1", "Supermarket Type2", "Supermarket Type3"])
     
-    # Location Explanation
-    with st.expander("EXPLANATION: Territory Location"):
-        st.write("Urban vs. Rural demographic. **IMPACT:** Tier 1 (Urban) usually suggests higher price tolerance, while Tier 3 often requires higher volume to reach the same revenue.")
+    with st.expander("INFO: Territory Location"):
+        st.write("Regional market tier. **Impact:** High-tier urban centers correlate with higher purchasing power in current logic.")
     outlet_location = st.selectbox("Territory Location", ["Tier 1", "Tier 2", "Tier 3"])
     
-    # Floor Space Explanation
-    with st.expander("EXPLANATION: Floor Space"):
-        st.write("Physical size of the store. **IMPACT:** Larger stores (High) allow for more consistent turnover across all product categories.")
-    outlet_size = st.selectbox("Floor Space (Size)", ["Small", "Medium", "High"])
+    with st.expander("INFO: Floor Space"):
+        st.write("Physical square footage. **Impact:** Medium and High sizes provide more stable forecasts.")
+    outlet_size = st.selectbox("Floor Space", ["Small", "Medium", "High"])
     
     outlet_years = st.slider("Market Presence (Years)", 0, 30, 15)
     
-    st.markdown("---")
-    st.markdown("### PRODUCT SPECIFICATIONS")
+    st.markdown('<div class="sidebar-mod-header">Product Specifications</div>', unsafe_allow_html=True)
     
-    # Price Explanation
-    with st.expander("EXPLANATION: Product Price (MRP)"):
-        st.write("The cost per unit. **IMPACT:** This is the strongest driver in our model. Higher prices directly scale the total revenue prediction.")
+    with st.expander("INFO: Product Price (FCFA)"):
+        st.write("Unit price point. **Impact:** Primary driver of total sales revenue calculation.")
     item_mrp = st.slider("Product Price (FCFA)", 50, 5000, 1500)
     
-    # Visibility Correction
-    with st.expander("EXPLANATION: Shelf Prominence"):
-        st.write("Physical shelf area. **IMPACT:** High prominence (15%+) generates higher 'impulse buy' probability, boosting the forecast by 10-15%.")
+    with st.expander("INFO: Shelf Prominence"):
+        st.write("Display visibility. **Impact:** Percentage-based uplift for impulse purchase likelihood.")
     item_visibility_pct = st.slider("Shelf Prominence (%)", 0, 100, 15)
     
     item_weight = st.number_input("Unit Weight (g)", 4.0, 22.0, 12.0)
