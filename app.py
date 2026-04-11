@@ -206,28 +206,38 @@ st.markdown("""
 with st.sidebar:
     st.image("https://img.icons8.com/ios-filled/100/fefaee/shop.png", width=80)
     
-    # New Field Explanations (Click to show/hide)
-    with st.expander("📖 FIELD DEFINITIONS"):
-        st.markdown("""
-            <div style="font-size: 0.8rem; line-height: 1.4;">
-            <b>Outlet Classification:</b> The store's business model (e.g., Grocery vs. Supermarket).<br><br>
-            <b>Territory Location:</b> Tier 1 (Urban), Tier 2 (Mid-size), Tier 3 (Local/Rural).<br><br>
-            <b>Product Price:</b> The Maximum Retail Price (MRP) in FCFA.<br><br>
-            <b>Shelf Prominence:</b> The percentage of display space allocated to this item.
-            </div>
-        """, unsafe_allow_html=True)
-
     st.markdown("### OPERATIONAL PARAMETERS")
     
+    # Outlet Type Explanation
+    with st.expander("ℹ️ LOGIC: Outlet Classification"):
+        st.write("Differentiates between small shops and massive hypermarkets. **IMPACT:** Supermarkets (Type 3) exponentially increase the predicted volume due to higher inventory capacity.")
     outlet_type = st.selectbox("Outlet Classification", ["Grocery Store", "Supermarket Type1", "Supermarket Type2", "Supermarket Type3"])
-    outlet_size = st.selectbox("Floor Space (Size)", ["Small", "Medium", "High"])
+    
+    # Location Explanation
+    with st.expander("ℹ️ LOGIC: Territory Location"):
+        st.write("Urban vs. Rural demographic. **IMPACT:** Tier 1 (Urban) usually suggests higher price tolerance, while Tier 3 often requires higher volume to reach the same revenue.")
     outlet_location = st.selectbox("Territory Location", ["Tier 1", "Tier 2", "Tier 3"])
+    
+    # Floor Space Explanation
+    with st.expander("ℹ️ LOGIC: Floor Space"):
+        st.write("Physical size of the store. **IMPACT:** Larger stores (High) allow for more consistent turnover across all product categories.")
+    outlet_size = st.selectbox("Floor Space (Size)", ["Small", "Medium", "High"])
+    
     outlet_years = st.slider("Market Presence (Years)", 0, 30, 15)
     
     st.markdown("---")
     st.markdown("### PRODUCT SPECIFICATIONS")
+    
+    # Price Explanation
+    with st.expander("ℹ️ LOGIC: Product Price (MRP)"):
+        st.write("The cost per unit. **IMPACT:** This is the strongest driver in our model. Higher prices directly scale the total revenue prediction.")
     item_mrp = st.slider("Product Price (FCFA)", 50, 5000, 1500)
+    
+    # Visibility Correction
+    with st.expander("ℹ️ LOGIC: Shelf Prominence"):
+        st.write("Physical shelf area. **IMPACT:** High prominence (15%+) generates higher 'impulse buy' probability, boosting the forecast by 10-15%.")
     item_visibility_pct = st.slider("Shelf Prominence (%)", 0, 100, 15)
+    
     item_weight = st.number_input("Unit Weight (g)", 4.0, 22.0, 12.0)
     item_type_cat = st.selectbox("Inventory Category", ["Food", "Drinks", "Non-Consumable"])
     item_fat = st.selectbox("Health Rating (Fat)", ["Low Fat", "Regular", "Non-Edible"])
